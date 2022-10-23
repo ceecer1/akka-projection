@@ -96,6 +96,14 @@ object ShoppingCartEventConsumer {
         throughputCount = 0
         throughputStartTime = System.nanoTime
       }
+
+      val projectionLag: Long = System.currentTimeMillis() - envelope.timestamp
+      if(projectionLag > 2000) {
+        log.info(
+          "Projection [{}] lag greater than [{}] ms",
+          projectionId.id,
+          projectionLag)
+      }
       Future.successful(Done)
     }
   }

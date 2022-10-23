@@ -5,7 +5,7 @@ while [ $i -le 100 ] ;
 do
    # run a few in background
    j=0
-   while [ $j -le 9 ] ;
+   while [ $j -le 10 ] ;
    do
      ./run-grpcurl.sh&
       j=$((j+1));
@@ -13,5 +13,5 @@ do
    # wait until completed
    ./run-grpcurl.sh
    i=$((i+1));
-   sleep 0.02
+   sleep 0.25
 done

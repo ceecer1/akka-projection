@@ -15,9 +15,6 @@ spec:
       labels:
         app: shoppinganalyticsservice
         actorSystemName: ShoppingAnalyticsService
-      annotations:
-        config.linkerd.io/skip-inbound-ports: 2552,8558
-        config.linkerd.io/skip-outbound-ports: 2552,8558
     spec:
       containers:
         - name: shopping-analytics-service
