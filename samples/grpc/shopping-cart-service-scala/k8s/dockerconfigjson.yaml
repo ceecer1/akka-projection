@@ -1,0 +1,10 @@
+kind: Secret
+type: kubernetes.io/dockerconfigjson
+apiVersion: v1
+metadata:
+  name: dockerconfigjson-ghcr-io
+  labels:
+    app: app-name
+  namespace: akka-grpc-projection
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJnaGNyLmlvIjp7ImF1dGgiOiJZMlZsWTJWeU1UcG5hSEJmTWtWSlUxbExOMUJWVGpNMlNrdDJaRnBRZFhSWFJtcFFhRzVKZG1kSk1qWlJiMFU0In19fQ==
