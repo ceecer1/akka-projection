@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simulator-deployment
+  labels:
+    app: simulator-app
+  namespace: akka-grpc-projection
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: simulator-app
+  template:
+    metadata:
+      labels:
+        app: simulator-app
+    spec:
+      containers:
+        - name: myapp-container
+          image: ghcr.io/ceecer1/simulator:122
+          imagePullPolicy: "Always"
+          resources:
+            limits:
+              memory: "2Gi"
+            requests:
+              memory: "2Gi"
+              cpu: "1800m"
+          command:
+            - sh
+            - run-many-grpcurl.sh
+
+      imagePullSecrets:
+        - name: dockerconfigjson-ghcr-io

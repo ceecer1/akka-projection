@@ -100,7 +100,7 @@ object ShoppingCartEventConsumer {
       val projectionLag: Long = System.currentTimeMillis() - envelope.timestamp
       if(projectionLag > 2000) {
         log.info(
-          "Projection [{}] lag greater than [{}] ms",
+          "Projection [{}] lag greater than 2 seconds is [{}] ms",
           projectionId.id,
           projectionLag)
       }
