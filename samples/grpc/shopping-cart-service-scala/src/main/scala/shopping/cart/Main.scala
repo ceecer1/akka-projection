@@ -28,6 +28,7 @@ object Main {
     ClusterBootstrap(system).start()
 
     ShoppingCart.init(system)
+    PublishKafkaEventsProjection.init(system)
 
     val eventProducerService = PublishEvents.eventProducerService(system)
 

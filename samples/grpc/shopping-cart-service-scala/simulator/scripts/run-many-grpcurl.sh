@@ -13,5 +13,5 @@ do
    # wait until completed
    ./run-grpcurl.sh
    i=$((i+1));
-   sleep 0.25
+   sleep 0.05
 done
