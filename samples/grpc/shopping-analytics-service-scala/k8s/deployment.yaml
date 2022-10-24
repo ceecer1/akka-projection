@@ -21,10 +21,10 @@ spec:
           image: ghcr.io/ceecer1/shopping-analytics-service:latest
           resources:
             limits:
-              memory: "1Gi"
+              memory: "2Gi"
             requests:
-              memory: "1Gi"
-              cpu: "200m"
+              memory: "2Gi"
+              cpu: "3500m"
           readinessProbe:
             httpGet:
               path: /ready
@@ -53,7 +53,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.namespace
             - name: JAVA_TOOL_OPTIONS
-              value: "-XX:InitialRAMPercentage=75 -XX:MaxRAMPercentage=75 -Dakka.persistence.r2dbc.connection-factory.ssl.enabled=on -Dakka.persistence.r2dbc.connection-factory.ssl.mode=require"
+              value: "-DShoppingCartEventConsumer.lag-threshold-ms=2000 -XX:InitialRAMPercentage=75 -XX:MaxRAMPercentage=75 -Dakka.persistence.r2dbc.connection-factory.ssl.enabled=on -Dakka.persistence.r2dbc.connection-factory.ssl.mode=require"
             - name: REQUIRED_CONTACT_POINT_NR
               value: "1"
             - name: DB_HOST
