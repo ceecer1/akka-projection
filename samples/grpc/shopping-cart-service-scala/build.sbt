@@ -83,5 +83,5 @@ libraryDependencies ++= Seq(
   "com.lightbend.akka" %% "akka-projection-r2dbc" % AkkaPersistenceR2dbcVersion,
   "com.lightbend.akka" %% "akka-projection-grpc" % AkkaProjectionVersion,
   "com.lightbend.akka" %% "akka-projection-eventsourced" % AkkaProjectionVersion,
-  "com.typesafe.akka" %% "akka-stream-kafka" % AlpakkaKafkaVersion,
+  "com.lightbend.akka" %% "akka-projection-kafka" % AkkaProjectionVersion,
   "com.lightbend.akka" %% "akka-projection-testkit" % AkkaProjectionVersion % Test)
