@@ -34,6 +34,11 @@ object ShoppingCartEventConsumer {
     private var throughputStartTime = System.nanoTime()
     private var throughputCount = 0
 
+    private var lagCount = 0L
+    // JVM System property
+    private val lagThresholdMillis =
+      Integer.getInteger("ShoppingCartEventConsumer.lag-threshold-ms", 2000)
+
     override def start(): Future[Done] = {
       log.info("Started Projection [{}].", projectionId.id)
       super.start()
@@ -52,7 +57,7 @@ object ShoppingCartEventConsumer {
 
       event match {
         case itemAdded: ItemAdded =>
-          log.info(
+          log.debug(
             "Projection [{}] consumed ItemAdded for cart {}, added {} {}. Total [{}] events.",
             projectionId.id,
             itemAdded.cartId,
@@ -60,7 +65,7 @@ object ShoppingCartEventConsumer {
             itemAdded.itemId,
             totalCount)
         case quantityAdjusted: ItemQuantityAdjusted =>
-          log.info(
+          log.debug(
             "Projection [{}] consumed ItemQuantityAdjusted for cart {}, changed {} {}. Total [{}] events.",
             projectionId.id,
             quantityAdjusted.cartId,
@@ -68,14 +73,14 @@ object ShoppingCartEventConsumer {
             quantityAdjusted.itemId,
             totalCount)
         case itemRemoved: ItemRemoved =>
-          log.info(
+          log.debug(
             "Projection [{}] consumed ItemRemoved for cart {}, removed {}. Total [{}] events.",
             projectionId.id,
             itemRemoved.cartId,
             itemRemoved.itemId,
             totalCount)
         case checkedOut: CheckedOut =>
-          log.info(
+          log.debug(
             "Projection [{}] consumed CheckedOut for cart {}. Total [{}] events.",
             projectionId.id,
             checkedOut.cartId,
@@ -89,21 +94,28 @@ object ShoppingCartEventConsumer {
         (System.nanoTime - throughputStartTime) / 1000 / 1000
       if (throughputCount >= 1000 || durationMs >= 10000) {
         log.info(
-          "Projection [{}] throughput [{}] events/s in [{}] ms",
+          "Projection [{}] throughput [{}] events/s in [{}] ms. Total [{}] events.",
           projectionId.id,
           1000L * throughputCount / durationMs,
-          durationMs)
+          durationMs,
+          totalCount)
         throughputCount = 0
         throughputStartTime = System.nanoTime
       }
 
-      val projectionLag: Long = System.currentTimeMillis() - envelope.timestamp
-      if(projectionLag > 2000) {
-        log.info(
-          "Projection [{}] lag greater than 2 seconds [{}] ms",
-          projectionId.id,
-          projectionLag)
+      val lagMillis = System.currentTimeMillis() - envelope.timestamp
+      if (lagMillis > lagThresholdMillis) {
+        lagCount += 1
+        if ((lagCount == 1) || (lagCount % 1000 == 0))
+          log.info(
+            "Projection [{}] lag [{}] ms. Total [{}] events.",
+            projectionId.id,
+            lagMillis,
+            totalCount)
+      } else {
+        lagCount = 0
       }
+
       Future.successful(Done)
     }
   }
