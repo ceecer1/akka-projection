@@ -64,7 +64,7 @@ object PublishKafkaEventsProjection {
     val minSlice = sliceRange.min
     val maxSlice = sliceRange.max
     val projectionId =
-      ProjectionId("PublishEventsProjection", s"carts-$minSlice-$maxSlice")
+      ProjectionId("PublishKafkaEventsProjection", s"carts-$minSlice-$maxSlice")
 
     val sourceProvider
         : SourceProvider[Offset, EventEnvelope[ShoppingCart.Event]] =
