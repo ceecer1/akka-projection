@@ -8,7 +8,7 @@ metadata:
 spec:
   containers:
     - name: myapp-container
-      image: ghcr.io/ceecer1/simulator:121
+      image: ghcr.io/ceecer1/simulator:127
       imagePullPolicy: "Always"
       resources:
         limits:

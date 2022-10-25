@@ -6,7 +6,7 @@ metadata:
     app: simulator-app
   namespace: akka-grpc-projection
 spec:
-  replicas: 2
+  replicas: 4
   selector:
     matchLabels:
       app: simulator-app
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: myapp-container
-          image: ghcr.io/ceecer1/simulator:122
+          image: ghcr.io/ceecer1/simulator:126
           imagePullPolicy: "Always"
           resources:
             limits:
