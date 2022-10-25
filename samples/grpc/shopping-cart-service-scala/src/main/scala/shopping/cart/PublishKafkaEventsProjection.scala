@@ -32,7 +32,7 @@ object PublishKafkaEventsProjection {
       numberOfSliceRanges)
 
     ShardedDaemonProcess(system).init(
-      name = "PublishEventsProjection",
+      name = "PublishKafkaEventsProjection",
       numberOfInstances = sliceRanges.size,
       index =>
         ProjectionBehavior(
