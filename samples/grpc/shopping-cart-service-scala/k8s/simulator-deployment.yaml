@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: simulator
+  name: simulator-deployment
   labels:
     app: simulator-app
   namespace: akka-grpc-projection
 spec:
-  replicas: 2
+  replicas: 4
   selector:
     matchLabels:
       app: simulator-app
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: myapp-container
-          image: ghcr.io/ceecer1/simulator:120
+          image: ghcr.io/ceecer1/simulator:126
           imagePullPolicy: "Always"
           resources:
             limits:

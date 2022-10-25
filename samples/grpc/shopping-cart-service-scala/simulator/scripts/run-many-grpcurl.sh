@@ -1,7 +1,7 @@
 #!/bin/sh
 
 i=0
-while [ $i -le 100 ] ;
+while [ $i -le 200 ] ;
 do
    # run a few in background
    j=0
@@ -13,5 +13,5 @@ do
    # wait until completed
    ./run-grpcurl.sh
    i=$((i+1));
-   sleep 0.05
+   sleep 0.10
 done
