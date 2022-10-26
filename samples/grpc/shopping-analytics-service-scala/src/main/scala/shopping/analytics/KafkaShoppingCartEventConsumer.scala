@@ -100,11 +100,7 @@ object KafkaShoppingCartEventConsumer {
       }
 
       val projectionLag: Long = System.currentTimeMillis() - record.timestamp()
-      if(projectionLag > 2000) {
-        log.info(
-          "Kafka Projection lag greater than 2 seconds [{}] ms",
-          projectionLag)
-      }
+      log.info("Kafka Projection lag [{}] ms", projectionLag)
 
       Future.successful(Done)
     } catch {
